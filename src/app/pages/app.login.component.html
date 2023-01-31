@@ -3,29 +3,57 @@
         <div class="login-panel-header">
             <img src="assets/layout/images/logo-slim.png">
         </div>
-        <div class="login-panel-content">
-            <div class="grid">
+        <div class="login-panel-content" [ngSwitch]="tela">
+            <div class="grid" *ngSwitchDefault>
                 <div class="col-12">
-                    <h1>Sign-in to Serenity Network</h1>
+                    <h1>Preencha seus dados abaixo para entrar:</h1>
                 </div>
                 <div class="col-12">
                     <span class="p-float-label">
                         <input type="text" pInputText>
-                        <label>Username</label>
+                        <label>Preencha seu e-mail para entrar</label>
                     </span>
                 </div>
                 <div class="col-12">
                     <span class="p-float-label">
                         <input type="text" pInputText>
-                        <label>Password</label>
+                        <label>Preencha aqui sua senha</label>
                     </span>
                 </div>
                 <div class="col-12">
-                    <button pButton type="button" label="Sign In" icon="pi pi-user"></button>
+                    <button pButton type="button" label="Acessar Avocat" icon="pi pi-user"></button>
                 </div>
                 <div class="col-12">
-                    Don't have an account? <a href="#">Sign Up</a> now.
+                    Ainda não tem cadastro? <a (click)="tela='signup'">Inscreva-se</a> aqui!
                 </div>
+            </div>
+            
+            <!--Signup-->
+            <div class="grid" *ngSwitchCase="'signup'">
+                <div class="col-12">
+                    <h1>Para efetuar o cadastro do seu escritório, preencha os dados abaixo:</h1>
+                </div>
+                <div class="col-12">
+                    <span class="p-float-label">
+                        <input type="text" pInputText>
+                        <label>Nome do seu escritório</label>
+                    </span>
+                </div>
+                <div class="col-12">
+                    <span class="p-float-label">
+                        <input type="text" pInputText>
+                        <label>Seu nome completo</label>
+                    </span>
+                </div>
+                <div class="col-12">
+                    <span class="p-float-label">
+                        <input type="text" pInputText>
+                        <label>E-mail para acessar a plataforma</label>
+                    </span>
+                </div>
+                <div class="col-12">
+                    <button pButton type="button" label="Criar o meu Escritóio" icon="pi pi-user"></button>
+                </div>               
             </div>
         </div>
     </div>
