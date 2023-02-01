@@ -18,17 +18,3 @@ export interface Customer {
     activity?: number;
     representative?: Representative;
 }
-
-//todo depois remover tudo que esta acima dessa linha.
-
-export interface Login {
-    username?: string;
-    password?: string
-}
-
-export interface NewCustomer {
-    id?: string;
-    fullName?: string;
-    officeName?: string;
-    email?: string;    
-}

@@ -123,7 +123,7 @@ import {AppHelpComponent} from './pages/app.help.component';
 import {AppNotfoundComponent} from './pages/app.notfound.component';
 import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
-import {AppLoginComponent} from './pages/app.login.component';
+import {AppLoginComponent} from './pages/account/app.login.component';
 import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
 import {BlockViewer} from './blocks/blockviewer/blockviewer.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
@@ -138,7 +138,8 @@ import {ProductService} from './demo/service/productservice';
 import {AppBreadcrumbService} from './app.breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import {ConfigService} from './demo/service/app.config.service';
-import { LoginService } from './demo/service/login.service';
+import { LoginService } from './services/login.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
     imports: [
@@ -275,7 +276,7 @@ import { LoginService } from './demo/service/login.service';
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, AppBreadcrumbService, ConfigService,
-        LoginService
+        LoginService, AuthService
     ],
     bootstrap: [AppComponent]
 })

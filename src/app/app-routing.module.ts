@@ -17,7 +17,7 @@ import {AppMainComponent} from './app.main.component';
 import {AppNotfoundComponent} from './pages/app.notfound.component';
 import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
-import {AppLoginComponent} from './pages/app.login.component';
+import {AppLoginComponent} from './pages/account/app.login.component';
 import {InputDemoComponent} from './demo/view/inputdemo.component';
 import {ButtonDemoComponent} from './demo/view/buttondemo.component';
 import {TableDemoComponent} from './demo/view/tabledemo.component';
@@ -30,12 +30,14 @@ import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
 import {AppInvoiceComponent} from './pages/app.invoice.component';
 import {AppHelpComponent} from './pages/app.help.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
                 path: '', component: AppMainComponent,
+                canActivate: [AuthService],
                 children: [
                     {path: '', component: DashboardComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
