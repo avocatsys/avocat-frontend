@@ -39,7 +39,7 @@ import { AuthService } from './services/auth.service';
                 path: '', component: AppMainComponent,
                 canActivate: [AuthService],
                 children: [
-                    {path: '', component: DashboardComponent},
+                    {path: 'dash', component: DashboardComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
