@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -138,6 +138,7 @@ import {ProductService} from './demo/service/productservice';
 import {AppBreadcrumbService} from './app.breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import {ConfigService} from './demo/service/app.config.service';
+import { LoginService } from './demo/service/login.service';
 
 @NgModule({
     imports: [
@@ -226,7 +227,8 @@ import {ConfigService} from './demo/service/app.config.service';
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
-        AppCodeModule
+        AppCodeModule,
+        ReactiveFormsModule
     ],
     declarations: [
         AppComponent,
@@ -272,7 +274,8 @@ import {ConfigService} from './demo/service/app.config.service';
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, AppBreadcrumbService, ConfigService
+        PhotoService, ProductService, MenuService, AppBreadcrumbService, ConfigService,
+        LoginService
     ],
     bootstrap: [AppComponent]
 })

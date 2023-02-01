@@ -3,7 +3,8 @@
         <div class="login-panel-header">
             <img src="assets/layout/images/logo-slim.png">
         </div>
-        <div class="login-panel-content" [ngSwitch]="tela">
+        <div class="login-panel-content" [ngSwitch]="navigation">
+            <p-messages [value]="msgs"></p-messages>            
             <div class="grid" *ngSwitchDefault>
                 <div class="col-12">
                     <h1>Preencha seus dados abaixo para entrar:</h1>
@@ -24,36 +25,41 @@
                     <button pButton type="button" label="Acessar Avocat" icon="pi pi-user"></button>
                 </div>
                 <div class="col-12">
-                    Ainda não tem cadastro? <a (click)="tela='signup'">Inscreva-se</a> aqui!
+                    Ainda não tem cadastro? <a (click)="navigation='signup'">Inscreva-se</a> aqui!
                 </div>
             </div>
             
             <!--Signup-->
             <div class="grid" *ngSwitchCase="'signup'">
-                <div class="col-12">
-                    <h1>Para efetuar o cadastro do seu escritório, preencha os dados abaixo:</h1>
-                </div>
-                <div class="col-12">
-                    <span class="p-float-label">
-                        <input type="text" pInputText>
-                        <label>Nome do seu escritório</label>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="p-float-label">
-                        <input type="text" pInputText>
-                        <label>Seu nome completo</label>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <span class="p-float-label">
-                        <input type="text" pInputText>
-                        <label>E-mail para acessar a plataforma</label>
-                    </span>
-                </div>
-                <div class="col-12">
-                    <button pButton type="button" label="Criar o meu Escritóio" icon="pi pi-user"></button>
-                </div>               
+                <form [formGroup]="formSignup">
+                    <div class="col-12">
+                        <h1>Realize o seu cadastro:</h1>
+                    </div>
+                    <div class="col-12">
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="officeName">
+                            <label>Nome do seu escritório</label>
+                            <small id="username-help" class="p-error" *ngIf="!formSignup.controls.officeName.valid && !formSignup.controls.officeName.prestine">Informe o seu nome completo.</small>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <span class="p-float-label">
+                            <input type="text" pInputText formControlName="fullName">
+                            <label>Seu nome completo</label>
+                            <small id="username-help" class="p-error" *ngIf="!formSignup.controls.fullName.valid && !formSignup.controls.officeName.prestine">Informe o seu nome completo.</small>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <span class="p-float-label">
+                            <input type="email" pInputText formControlName="email">
+                            <label>E-mail para acessar a plataforma</label>
+                            <small id="username-help" class="p-error" *ngIf="!formSignup.controls.email.valid && !formSignup.controls.officeName.prestine">Informe o seu e-mail.</small>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <button pButton type="submit" label="Criar o meu Escritóio" icon="pi pi-user" [disabled]="formSignup.invalid" (click)="submit()"></button>
+                    </div>
+                </form>               
             </div>
         </div>
     </div>
