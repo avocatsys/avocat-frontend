@@ -80,8 +80,11 @@ export class BranchofficeComponent implements OnInit {
 
   save() {
     this.busy = true;
-    this.formBranchOffice.disable();    
-    if (this.formBranchOffice.value.id == null || this.formBranchOffice.value.id == "") {
+    this.formBranchOffice.disable();
+    if (
+      this.formBranchOffice.value.id == null ||
+      this.formBranchOffice.value.id == ""
+    ) {
       this.branchOfficeService.save(this.formBranchOffice.value).subscribe({
         next: () => {
           this.showSuccessViaToast(),
@@ -104,7 +107,9 @@ export class BranchofficeComponent implements OnInit {
       next: (data) => {
         this.rows = data.content;
       },
-      error: () => {},
+      error: () => {
+        this.showErrorViaToast();
+      },
     });
   }
 
@@ -118,11 +123,12 @@ export class BranchofficeComponent implements OnInit {
       },
       error: () => {
         this.showSuccessViaToast();
+        this.formBranchOffice.enable();
       },
     });
   }
 
-  update() {    
+  update() {
     this.busy = true;
     this.formBranchOffice.disable();
     this.branchOfficeService.update(this.formBranchOffice.value).subscribe({
