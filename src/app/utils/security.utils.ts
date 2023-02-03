@@ -9,8 +9,7 @@ export class Security {
     return headers;
   }
 
-  public static setCredentials(credentials: Credentials) {
-    debugger
+  public static setCredentials(credentials: Credentials) {    
     localStorage.setItem("user.token", credentials.token);
     localStorage.setItem("_ci", btoa(credentials.customerId));
     localStorage.setItem("_un", btoa(credentials.username));

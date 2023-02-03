@@ -18,7 +18,11 @@ export class AppLoginComponent implements OnInit {
 
   public busy = false;
 
-  constructor(private router: Router, private fb: FormBuilder, private loginService: LoginService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private loginService: LoginService
+  ) {
     this.formSignup = this.fb.group({
       fullName: ["", Validators.required],
       officeName: ["", Validators.required],
@@ -45,13 +49,12 @@ export class AppLoginComponent implements OnInit {
     });
   }
 
-
   logIn() {
     this.busy = true;
     this.loginService.logIn(this.formLogin.value).subscribe({
       next: (data) => {
         Security.setCredentials(data);
-        this.router.navigate(["/dash"]);
+          this.router.navigate(["/dash"]);
       },
       error: () => {
         this.showErrorViaMessages();
