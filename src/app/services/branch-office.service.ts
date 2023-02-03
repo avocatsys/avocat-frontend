@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { BranchOffice } from "../models/branch-office.models";
+import { BranchOffice, Pageable } from "../models/branch-office.models";
 import { Security } from "../utils/security.utils";
 
 @Injectable({
@@ -14,11 +14,32 @@ export class BranchOfficeService {
 
   private readonly customerId = Security.getCustomerId();
 
-  public save(data): Observable<BranchOffice> {
-    debugger
+  save(data: BranchOffice): Observable<BranchOffice> {
     return this.http.post<BranchOffice>(
       `${this.url}/v1/customer/${this.customerId}/branch-offices`,
       data,
+      { headers: Security.composeHeaders() }
+    );
+  }
+
+  update(data: BranchOffice) {
+    return this.http.put<BranchOffice>(
+      `${this.url}/v1/customer/${this.customerId}/branch-offices`,
+      data,
+      { headers: Security.composeHeaders() }
+    );
+  }
+
+  load() {
+    return this.http.get<Pageable>(
+      `${this.url}/v1/customer/${this.customerId}/branch-offices`,
+      { headers: Security.composeHeaders() }
+    );
+  }
+
+  findById(uuid: string) {
+    return this.http.get<BranchOffice>(
+      `${this.url}/v1/customer/${this.customerId}/branch-offices/${uuid}`,
       { headers: Security.composeHeaders() }
     );
   }

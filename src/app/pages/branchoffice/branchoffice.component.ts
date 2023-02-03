@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
-import { Customer } from "src/app/demo/domain/customer";
-import { CustomerService } from "src/app/demo/service/customerservice";
+import { BranchOffice } from "src/app/models/branch-office.models";
 import { BranchOfficeService } from "src/app/services/branch-office.service";
 
 @Component({
@@ -22,23 +21,25 @@ import { BranchOfficeService } from "src/app/services/branch-office.service";
   providers: [MessageService],
 })
 export class BranchofficeComponent implements OnInit {
-  customers1: Customer[];
+  rows: BranchOffice[];
 
   navigation: string = "";
 
-  private busy: boolean = true;
+  busy: boolean = false;
 
   formBranchOffice: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private branchOfficeService: BranchOfficeService,
     private service: MessageService,
-    private customerService: CustomerService
+    private branchOfficeService: BranchOfficeService
   ) {}
 
   ngOnInit(): void {
+    this.load();
+
     this.formBranchOffice = this.fb.group({
+      id: [null],
       corporateName: [
         "",
         Validators.compose([
@@ -75,19 +76,61 @@ export class BranchofficeComponent implements OnInit {
         ]),
       ],
     });
-
-    this.customerService.getCustomersLarge().then((customers) => {
-      this.customers1 = customers;
-    });
   }
 
   save() {
     this.busy = true;
-    this.branchOfficeService.save(this.formBranchOffice.value).subscribe({
+    this.formBranchOffice.disable();    
+    if (this.formBranchOffice.value.id == null || this.formBranchOffice.value.id == "") {
+      this.branchOfficeService.save(this.formBranchOffice.value).subscribe({
+        next: () => {
+          this.showSuccessViaToast(),
+            this.formBranchOffice.reset(),
+            (this.busy = false),
+            this.formBranchOffice.enable();
+        },
+        error: () => {
+          this.showErrorViaToast(), (this.busy = false);
+          this.formBranchOffice.enable();
+        },
+      });
+    } else {
+      this.update();
+    }
+  }
+
+  load() {
+    this.branchOfficeService.load().subscribe({
+      next: (data) => {
+        this.rows = data.content;
+      },
+      error: () => {},
+    });
+  }
+
+  edit(uuid: string) {
+    this.navigation = "form";
+    this.busy = true;
+    this.branchOfficeService.findById(uuid).subscribe({
+      next: (data) => {
+        this.formBranchOffice.patchValue(data);
+        this.busy = false;
+      },
+      error: () => {
+        this.showSuccessViaToast();
+      },
+    });
+  }
+
+  update() {    
+    this.busy = true;
+    this.formBranchOffice.disable();
+    this.branchOfficeService.update(this.formBranchOffice.value).subscribe({
       next: () => {
         this.showSuccessViaToast(),
           this.formBranchOffice.reset(),
-          (this.busy = false);
+          (this.busy = false),
+          this.formBranchOffice.enable();
       },
       error: () => {
         this.showErrorViaToast(), (this.busy = false);
