@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Message } from "primeng/api";
-import { Token } from "src/app/models/account.models";
 import { LoginService } from "src/app/services/login.service";
 import { Security } from "src/app/utils/security.utils";
 
@@ -51,7 +50,7 @@ export class AppLoginComponent implements OnInit {
     this.busy = true;
     this.loginService.logIn(this.formLogin.value).subscribe({
       next: (data) => {
-        Security.setToken(data.token);
+        Security.setCredentials(data);
         this.router.navigate(["/dash"]);
       },
       error: () => {

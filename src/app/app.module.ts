@@ -140,6 +140,7 @@ import {MenuService} from './app.menu.service';
 import {ConfigService} from './demo/service/app.config.service';
 import { LoginService } from './services/login.service';
 import { AuthService } from './services/auth.service';
+import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
 
 @NgModule({
     imports: [
@@ -270,7 +271,8 @@ import { AuthService } from './services/auth.service';
         AppTimelineDemoComponent,
         AppAccessdeniedComponent,
         BlocksComponent,
-        BlockViewer
+        BlockViewer,
+        BranchofficeComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

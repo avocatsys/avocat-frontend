@@ -31,6 +31,7 @@ import {AppInvoiceComponent} from './pages/app.invoice.component';
 import {AppHelpComponent} from './pages/app.help.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import { AuthService } from './services/auth.service';
+import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import { AuthService } from './services/auth.service';
                 canActivate: [AuthService],
                 children: [
                     {path: 'dash', component: DashboardComponent},
+                    {path: 'branch-office', component: BranchofficeComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},

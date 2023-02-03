@@ -3,6 +3,9 @@ export interface Login {
     password?: string
 }
 
-export interface Token {
-    token?: string
+export interface Credentials {    
+    token?: string,
+    customerId?: string,
+    branchOfficeId?: string,
+    username?: string    
 }
