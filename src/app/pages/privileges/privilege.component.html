@@ -1,0 +1,38 @@
+<div class="grid">
+    <div class="col-12">
+      <div class="card">
+        <h5>Privilégios</h5>
+        <p-table
+          #dt1
+          [value]="rows"
+          dataKey="id"
+          [rows]="10"
+          [rowHover]="true"
+          styleClass="p-datatable-gridlines"
+          [paginator]="true"
+          responsiveLayout="scroll"
+        >          
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
+                <div class="flex justify-content-between align-items-center">
+                  Descrição
+                </div>
+              </th>              
+            </tr>            
+          </ng-template>
+          <ng-template pTemplate="body" let-row>
+            <tr>
+              <td style="min-width: 12rem">
+                {{ row.name }}              
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">No resources found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
