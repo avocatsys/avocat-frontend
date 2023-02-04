@@ -1,0 +1,120 @@
+<div [ngSwitch]="navigation">
+  <div class="grid" *ngSwitchDefault="list">
+    <div class="col-12">
+      <div class="card">
+        <h5>Grupos</h5>
+        <p-table
+          #dt1
+          [value]="rows"
+          dataKey="id"
+          [rows]="10"
+          [rowHover]="true"
+          styleClass="p-datatable-gridlines"
+          [paginator]="true"
+          responsiveLayout="scroll"
+        >
+          <ng-template pTemplate="caption">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+              <button
+                pButton
+                label="Novo"
+                class="p-button-outlined mb-2"
+                icon="pi pi-plus"
+                (click)="navigation = 'form'; formGroup.reset()"
+              ></button>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>
+                <div class="flex justify-content-between align-items-center">
+                  Descrição
+                </div>
+              </th>
+              <th>
+                <div class="flex justify-content-between align-items-center">
+                  Ações
+                </div>
+              </th>
+            </tr>            
+          </ng-template>
+          <ng-template pTemplate="body" let-row>
+            <tr>
+              <td style="min-width: 12rem">
+                {{ row.name }}
+              </td>
+              <td class="text-center" style="min-width: 8rem">
+                <i
+                  class="pi pi-file-edit"
+                  title="edit"
+                  style="color: blue; cursor: pointer"
+                  (click)="edit(row.id)"
+                ></i>
+                <i
+                  class="pi pi-trash"
+                  title="remove"
+                  style="color: red; cursor: pointer; margin-left: 1rem"
+                ></i>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="7">No resources found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngSwitchCase="'form'">
+    <p-toast key="tst" [baseZIndex]="99999"></p-toast>
+    <span *ngIf="busy">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      <small style="margin-left: 0.5rem">Processing...</small>
+    </span>
+    <h5>Grupos</h5>
+    <button
+      pButton
+      label="Voltar"
+      class="p-button-outlined mb-2"
+      icon="pi pi-arrow-left"
+      (click)="navigation = 'list'; load()"
+    ></button>
+
+    <form [formGroup]="formGroup">
+      <div class="grid p-fluid mt-3">
+        <input
+          type="text"
+          id="inputtext"
+          pInputText
+          hidden
+          formControlName="id"
+        />
+
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input
+              type="text"
+              id="inputtext"
+              pInputText
+              formControlName="name"
+            />
+            <label for="inputtext">Descrição</label>
+          </span>
+        </div>
+      </div>
+
+      <button
+        pButton
+        pRipple
+        label="Salvar"
+        class="mr-2 mb-2"
+        icon="pi pi-save"
+        (click)="save()"
+        [disabled]="busy || formGroup.invalid"
+      ></button>
+    </form>
+  </div>
+</div>

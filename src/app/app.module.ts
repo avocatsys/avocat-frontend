@@ -141,6 +141,7 @@ import {ConfigService} from './demo/service/app.config.service';
 import { LoginService } from './services/login.service';
 import { AuthService } from './services/auth.service';
 import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
+import { GroupComponent } from './pages/group/group.component';
 
 @NgModule({
     imports: [
@@ -272,7 +273,8 @@ import { BranchofficeComponent } from './pages/branchoffice/branchoffice.compone
         AppAccessdeniedComponent,
         BlocksComponent,
         BlockViewer,
-        BranchofficeComponent
+        BranchofficeComponent,
+        GroupComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

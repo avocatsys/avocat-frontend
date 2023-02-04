@@ -32,6 +32,7 @@ import {AppHelpComponent} from './pages/app.help.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import { AuthService } from './services/auth.service';
 import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
+import { GroupComponent } from './pages/group/group.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { BranchofficeComponent } from './pages/branchoffice/branchoffice.compone
                 children: [
                     {path: 'dash', component: DashboardComponent},
                     {path: 'branch-office', component: BranchofficeComponent},
+                    {path: 'groups', component: GroupComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},

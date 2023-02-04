@@ -12,6 +12,7 @@ export class Security {
   public static setCredentials(credentials: Credentials) {    
     localStorage.setItem("user.token", credentials.token);
     localStorage.setItem("_ci", btoa(credentials.customerId));
+    localStorage.setItem("_boi", btoa(credentials.branchOfficeId));
     localStorage.setItem("_un", btoa(credentials.username));
   }
 
@@ -26,6 +27,15 @@ export class Security {
 
   public static getCustomerId(): string {
     const data = localStorage.getItem('_ci');
+    if (data) {
+        return atob(data);
+    } else {
+        return null;
+    }
+  }
+
+  public static getBranchOfficeId(): string {
+    const data = localStorage.getItem('_boi');
     if (data) {
         return atob(data);
     } else {

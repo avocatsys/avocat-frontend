@@ -7,7 +7,6 @@ export interface Pageable {
   numberOfElements?: number
 }
 
-
 export interface BranchOffice {
   id?: string;
   corporateName?: string;
