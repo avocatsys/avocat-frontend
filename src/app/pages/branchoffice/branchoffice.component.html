@@ -20,7 +20,7 @@
                 label="Novo"
                 class="p-button-outlined mb-2"
                 icon="pi pi-plus"
-                (click)="navigation = 'form'"
+                (click)="navigation = 'form'; formBranchOffice.reset()"
               ></button>
             </div>
           </ng-template>
@@ -195,7 +195,7 @@
         class="mr-2 mb-2"
         icon="pi pi-save"
         (click)="save()"
-        [disabled]="busy"
+        [disabled]="busy || formBranchOffice.invalid"
       ></button>
     </form>
   </div>

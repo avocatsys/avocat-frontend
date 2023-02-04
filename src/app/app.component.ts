@@ -1,27 +1,56 @@
-import {Component, OnInit} from '@angular/core';
-import {PrimeNGConfig} from 'primeng/api';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { PrimeNGConfig } from "primeng/api";
+import { Security } from "./utils/security.utils";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
+  selector: "app-root",
+  templateUrl: "./app.component.html",
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
+  layoutMode = "overlay";
 
-    layoutMode = 'overlay';
+  layoutColor = "light";
 
-    layoutColor = 'light';
+  darkMenu = false;
 
-    darkMenu = false;
+  isRTL = false;
 
-    isRTL = false;
+  inputStyle = "filled";
 
-    inputStyle = 'filled';
+  ripple = true;
 
-    ripple = true;
+  private url = "http://localhost:8080/avocat";
 
-    constructor(private primengConfig: PrimeNGConfig) {}
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
-    ngOnInit() {
-        this.primengConfig.ripple = true;
+  ngOnInit() {
+    this.primengConfig.ripple = true;
+    this.validToken();
+  }
+
+  validToken() {
+    const token = Security.getToken();
+
+    if (token == null || token == "") {
+      this.router.navigate(["/login"]);
+    } else {
+      this.http
+        .get(`${this.url}/v1/authentication/token/${token}`)
+        .subscribe({
+          next: (data) => {
+            this.router.navigate(["/dash"]);
+          },
+          error: (data) => {
+            this.router.navigate(["/login"]);
+            Security.clear();
+          },
+        });
     }
+  }
 }
