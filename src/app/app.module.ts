@@ -142,7 +142,8 @@ import { LoginService } from './services/login.service';
 import { AuthService } from './services/auth.service';
 import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
 import { GroupComponent } from './pages/group/group.component';
-import { PrivilegeComponent } from './pages/privileges/privilege.component';
+import { PrivilegeComponent } from './pages/privilege/privilege.component';
+import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
     imports: [
@@ -276,7 +277,8 @@ import { PrivilegeComponent } from './pages/privileges/privilege.component';
         BlockViewer,
         BranchofficeComponent,
         GroupComponent,
-        PrivilegeComponent
+        PrivilegeComponent,
+        UserComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

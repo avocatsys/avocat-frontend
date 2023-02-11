@@ -22,7 +22,7 @@ export class BranchOfficeService {
     );
   }
 
-  update(data: BranchOffice) {
+  update(data: BranchOffice) {    
     return this.http.put<BranchOffice>(
       `${this.url}/v1/customer/${this.customerId}/branch-offices`,
       data,
@@ -30,7 +30,7 @@ export class BranchOfficeService {
     );
   }
 
-  load() {
+  load() {    
     return this.http.get<Pageable>(
       `${this.url}/v1/customer/${this.customerId}/branch-offices`,
       { headers: Security.composeHeaders() }

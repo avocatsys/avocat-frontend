@@ -33,7 +33,8 @@ import {BlocksComponent} from './blocks/blocks/blocks.component';
 import { AuthService } from './services/auth.service';
 import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
 import { GroupComponent } from './pages/group/group.component';
-import { PrivilegeComponent } from './pages/privileges/privilege.component';
+import { PrivilegeComponent } from './pages/privilege/privilege.component';
+import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
     imports: [
@@ -42,9 +43,10 @@ import { PrivilegeComponent } from './pages/privileges/privilege.component';
                 path: '', component: AppMainComponent,
                 canActivate: [AuthService],
                 children: [
-                    {path: 'dash', component: DashboardComponent},
+                    {path: 'dash', component: UserComponent},
                     {path: 'branch-office', component: BranchofficeComponent},
                     {path: 'groups', component: GroupComponent},
+                    {path: 'users', component: UserComponent},
                     {path: 'privileges', component: PrivilegeComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
