@@ -84,7 +84,7 @@
     ></button>
 
     <form [formGroup]="formGroup">
-      <div class="grid p-fluid mt-3">
+      <div class="grid p-fluid">
         <input
           type="text"
           id="inputtext"
@@ -92,6 +92,18 @@
           hidden
           formControlName="id"
         />
+
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input
+              type="text"
+              id="inputtext"
+              pInputText
+              formControlName="name"
+            />
+            <label for="inputtext">Nome</label>
+          </span>
+        </div>
 
         <div class="field col-12 md:col-4">
           <span class="p-float-label">
@@ -117,7 +129,7 @@
         </div>
       </div>
     </form>
-
+   
     <span><b>Previlégios</b></span>
     <div class="col-12">
       <div class="grid p-fluid mt-3">
@@ -128,10 +140,11 @@
               *ngFor="let privilege of privilegesOptions"
             >
               <p-checkbox
-                value="{{ privilege.id }}"
+                label="{{ privilege.name }}"
+                [value]="privilege.id"
                 [(ngModel)]="valCheck"
+                [disabled]="privilege.name === 'ROLE_USER'"
               ></p-checkbox>
-              <label>{{ privilege.name }}</label>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: MessageService,
-    private groupService: UserService,
+    private userService: UserService,
     private privilegeService: PrivilegeService,
     private branchOfficeService: BranchOfficeService
   ) {}
@@ -45,6 +45,14 @@ export class UserComponent implements OnInit {
 
     this.formGroup = this.fb.group({
       id: [null],
+      name: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.min(5),
+          Validators.max(250),
+        ]),
+      ],
       username: [
         "",
         Validators.compose([
@@ -76,8 +84,7 @@ export class UserComponent implements OnInit {
   save() {
     this.busy = true;
     this.formGroup.disable();
-    if (this.formGroup.value.id == null || this.formGroup.value.id == "") {      
-
+    if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
       let privilegeArray = [];
       this.valCheck.map((i) => {
         let privilege = this.getPrivileges(i);
@@ -87,16 +94,12 @@ export class UserComponent implements OnInit {
       this.formGroup.get("privileges").setValue(privilegeArray);
       this.formGroup.get("password").setValue(this.getPasswordMock());
 
-      this.groupService.save(this.formGroup.value).subscribe({
+      this.userService.save(this.formGroup.value).subscribe({
         next: () => {
-          this.showSuccessViaToast(),
-            this.formGroup.reset(),
-            (this.busy = false),
-            this.formGroup.enable();
+          this.showSuccessViaToast(), this.clear();
         },
         error: () => {
-          this.showErrorViaToast(), (this.busy = false);
-          this.formGroup.enable();
+          this.showErrorViaToast(), (this.busy = false), this.clear();
         },
       });
     } else {
@@ -105,9 +108,9 @@ export class UserComponent implements OnInit {
   }
 
   load() {
-    this.groupService.load().subscribe({
+    this.userService.load().subscribe({
       next: (data) => {
-        this.rows = data.content;        
+        this.rows = data.content;
       },
       error: () => {
         this.showErrorViaToast();
@@ -139,16 +142,16 @@ export class UserComponent implements OnInit {
 
   edit(uuid: string) {
     this.navigation = "form";
-    this.busy = true;
     this.formGroup.enable();
-    this.groupService.findById(uuid).subscribe({
+    this.userService.findById(uuid).subscribe({
       next: (data) => {
         this.formGroup.patchValue(data);
+        this.privilegesOptions = data.privileges;        
         this.busy = false;
       },
       error: () => {
-        this.showSuccessViaToast();
-        this.formGroup.enable();
+        this.showErrorViaToast();
+        this.busy = false;
       },
     });
   }
@@ -156,12 +159,9 @@ export class UserComponent implements OnInit {
   update() {
     this.busy = true;
     this.formGroup.disable();
-    this.groupService.update(this.formGroup.value).subscribe({
+    this.userService.update(this.formGroup.value).subscribe({
       next: () => {
-        this.showSuccessViaToast(),
-          this.formGroup.reset(),
-          (this.busy = false),
-          this.formGroup.enable();
+        this.showSuccessViaToast(), this.clear();
       },
       error: () => {
         this.showErrorViaToast(), (this.busy = false);
@@ -175,6 +175,13 @@ export class UserComponent implements OnInit {
 
   getPasswordMock(): string {
     return Math.random().toString(36).slice(-8);
+  }
+
+  clear() {
+    this.formGroup.reset();
+    this.busy = false;
+    this.formGroup.enable();
+    this.privilegesOptions = [];
   }
 
   showErrorViaToast() {

@@ -13,6 +13,7 @@ export class UserService {
   private url = "http://localhost:8080/avocat";
 
   private readonly branchOfficeId = Security.getBranchOfficeId();
+  private readonly customerId = Security.getCustomerId();
 
   save(data: User) {
     return this.http.post<User>(
@@ -32,7 +33,7 @@ export class UserService {
 
   load() {
     return this.http.get<PageableUser>(
-      `${this.url}/v1/branch-office/${this.branchOfficeId}/users`,
+      `${this.url}/v1/customer/${this.customerId}/users`,
       { headers: Security.composeHeaders() }
     );
   }

@@ -13,7 +13,7 @@ export class Security {
     localStorage.setItem("user.token", credentials.token);
     localStorage.setItem("_ci", btoa(credentials.customerId));
     localStorage.setItem("_boi", btoa(credentials.branchOfficeId));
-    localStorage.setItem("_un", btoa(credentials.username));
+    localStorage.setItem("_un", btoa(credentials.name));
   }
 
   public static getToken(): string {

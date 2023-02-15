@@ -8,12 +8,12 @@ import { Security } from "./utils/security.utils";
   templateUrl: "./app.topbar.component.html",
 })
 export class AppTopBarComponent implements OnInit {
-  public username: string;
+  public name: string;
 
   constructor(public appMain: AppMainComponent, private router: Router) {}
 
   ngOnInit(): void {
-    this.username = Security.getUsername();
+    this.name = Security.getUsername();
   }
 
   logout(){

@@ -12,8 +12,9 @@ export interface PageableUser {
 
 export interface User{
     id?: string;
+    name?: string;
     username?: string;
     password?: string;
-    privileges?: string[];
+    privileges?: Privilege[];
     branchOffice?: BranchOffice;    
 }
