@@ -1,4 +1,5 @@
 import { BranchOffice } from "./branch-office.models";
+import { Group } from "./group.models";
 import { Privilege } from "./privilege.models";
 
 export interface PageableUser {
@@ -16,5 +17,6 @@ export interface User{
     username?: string;
     password?: string;
     privileges?: Privilege[];
-    branchOffice?: BranchOffice;    
+    branchOffice?: BranchOffice;
+    group?: Group    
 }

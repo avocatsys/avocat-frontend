@@ -117,7 +117,7 @@
           </span>
         </div>
 
-        <div class="field col-12 md:col-4">
+        <div class="field col-12 md:col-4">          
           <p-dropdown
             type="text"
             id="id"
@@ -127,7 +127,19 @@
             formControlName="branchOffice"
           ></p-dropdown>
         </div>
+        
+        <div class="field col-12 md:col-4">          
+          <p-dropdown
+            type="text"
+            id="id"
+            placeholder="Selecione o Grupo"
+            optionLabel="name"
+            [options]="groupDrop"
+            formControlName="group"
+          ></p-dropdown>
+        </div>   
       </div>
+
     </form>
    
     <span><b>Previlégios</b></span>

@@ -2,9 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { BranchOffice } from "src/app/models/branch-office.models";
+import { Group } from "src/app/models/group.models";
 import { Privilege } from "src/app/models/privilege.models";
 import { User } from "src/app/models/user.models";
 import { BranchOfficeService } from "src/app/services/branch-office.service";
+import { GroupService } from "src/app/services/group.service";
 import { PrivilegeService } from "src/app/services/privilege.service";
 import { UserService } from "src/app/services/user.service";
 
@@ -26,6 +28,8 @@ export class UserComponent implements OnInit {
 
   privilegesOptions: Privilege[];
 
+  groupDrop: Group[];
+
   branchOfficeDrop: BranchOffice[];
 
   formGroup: FormGroup;
@@ -35,13 +39,15 @@ export class UserComponent implements OnInit {
     private service: MessageService,
     private userService: UserService,
     private privilegeService: PrivilegeService,
-    private branchOfficeService: BranchOfficeService
+    private branchOfficeService: BranchOfficeService,
+    private groupService: GroupService
   ) {}
 
   ngOnInit(): void {
     this.load();
     this.loadPrivileges();
     this.loadBranchOffices();
+    this.loadGroups();
 
     this.formGroup = this.fb.group({
       id: [null],
@@ -63,6 +69,14 @@ export class UserComponent implements OnInit {
       ],
       password: [null],
       branchOffice: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.min(5),
+          Validators.max(250),
+        ]),
+      ],
+      group: [
         null,
         Validators.compose([
           Validators.required,
@@ -133,6 +147,17 @@ export class UserComponent implements OnInit {
     this.branchOfficeService.load().subscribe({
       next: (data) => {
         this.branchOfficeDrop = data.content;
+      },
+      error: () => {
+        this.showErrorViaToast();
+      },
+    });
+  }
+
+  loadGroups() {
+    this.groupService.load().subscribe({
+      next: (data) => {
+        this.groupDrop = data.content;
       },
       error: () => {
         this.showErrorViaToast();
