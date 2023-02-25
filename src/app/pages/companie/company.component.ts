@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { BranchOffice } from 'src/app/models/branch-office.models';
-import { Company } from 'src/app/models/company.models';
-import { BranchOfficeService } from 'src/app/services/branch-office.service';
-import { CompanyService } from 'src/app/services/company.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MessageService } from "primeng/api";
+import { BranchOffice } from "src/app/models/branch-office.models";
+import { Company } from "src/app/models/company.models";
+import { BranchOfficeService } from "src/app/services/branch-office.service";
+import { CompanyService } from "src/app/services/company.service";
 
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  providers: [CompanyService]
+  selector: "app-company",
+  templateUrl: "./company.component.html",
+  providers: [CompanyService],
 })
 export class CompanyComponent implements OnInit {
   navigation: string = "";
@@ -23,20 +24,19 @@ export class CompanyComponent implements OnInit {
 
   branchOfficeDrop: BranchOffice[];
 
-  //formGroup: FormGroup;
+  formGroup: FormGroup;
 
   constructor(
-    //private fb: FormBuilder,
+    private fb: FormBuilder,
     private service: MessageService,
-    private userService: CompanyService,    
-    private branchOfficeService: BranchOfficeService    
+    private userService: CompanyService,
+    private branchOfficeService: BranchOfficeService
   ) {}
 
   ngOnInit(): void {
-    this.load();    
-    //this.loadBranchOffices();    
+    this.load();
+    //this.loadBranchOffices();
 
-    /*
     this.formGroup = this.fb.group({
       id: [null],
       name: [
@@ -47,7 +47,7 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-      username: [
+      cpfCnpj: [
         "",
         Validators.compose([
           Validators.required,
@@ -55,8 +55,7 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-      password: [null],
-      branchOffice: [
+      billingEmail: [
         null,
         Validators.compose([
           Validators.required,
@@ -64,7 +63,7 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-      group: [
+      description: [
         null,
         Validators.compose([
           Validators.required,
@@ -72,7 +71,7 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-      privileges: [
+      stateRegistration: [
         null,
         Validators.compose([
           Validators.required,
@@ -80,23 +79,39 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-    });*/
+      //empresas tipos
+      issueDay: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.min(5),
+          Validators.max(250),
+        ]),
+      ],
+      dueDate: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.min(5),
+          Validators.max(250),
+        ]),
+      ],
+      maturityTerm: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.min(5),
+          Validators.max(250),
+        ]),
+      ],
+    });
   }
 
-  /*
   save() {
     this.busy = true;
     this.formGroup.disable();
     if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
-      let privilegeArray = [];
-      this.valCheck.map((i) => {
-        let privilege = this.getPrivileges(i);
-        privilegeArray.push(privilege);
-      });
-
-      this.formGroup.get("privileges").setValue(privilegeArray);
-      this.formGroup.get("password").setValue(this.getPasswordMock());
-
+      
       this.userService.save(this.formGroup.value).subscribe({
         next: () => {
           this.showSuccessViaToast(), this.clear();
@@ -109,14 +124,17 @@ export class CompanyComponent implements OnInit {
       this.update();
     }
   }
-*/
+
   load() {
+    this.busy = true;
     this.userService.load().subscribe({
       next: (data) => {
-        this.rows = data.content;        
+        this.rows = data.content;
+        this.busy = false;
       },
       error: () => {
         this.showErrorViaToast();
+        this.busy = false;
       },
     });
   }
@@ -131,14 +149,13 @@ export class CompanyComponent implements OnInit {
       },
     });
   }
-/*
+  
   edit(uuid: string) {
     this.navigation = "form";
     this.formGroup.enable();
     this.userService.findById(uuid).subscribe({
       next: (data) => {
-        this.formGroup.patchValue(data);
-        this.privilegesOptions = data.privileges;        
+        this.formGroup.patchValue(data);               
         this.busy = false;
       },
       error: () => {
@@ -160,13 +177,11 @@ export class CompanyComponent implements OnInit {
       },
     });
   }
-*/
-  
+
   clear() {
-    //this.formGroup.reset();
+    this.formGroup.reset();
     this.busy = false;
-    //this.formGroup.enable();
-    //this.privilegesOptions = [];
+    this.formGroup.enable();    
   }
 
   showErrorViaToast() {
@@ -187,4 +202,3 @@ export class CompanyComponent implements OnInit {
     });
   }
 }
-
