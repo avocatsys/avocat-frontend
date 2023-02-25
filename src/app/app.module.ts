@@ -144,6 +144,9 @@ import { BranchofficeComponent } from './pages/branchoffice/branchoffice.compone
 import { GroupComponent } from './pages/group/group.component';
 import { PrivilegeComponent } from './pages/privilege/privilege.component';
 import { UserComponent } from './pages/user/user.component';
+import { CompanyComponent } from './pages/companie/company.component';
+import { MessageService } from 'primeng/api';
+
 
 @NgModule({
     imports: [
@@ -278,13 +281,14 @@ import { UserComponent } from './pages/user/user.component';
         BranchofficeComponent,
         GroupComponent,
         PrivilegeComponent,
-        UserComponent
+        UserComponent,
+        CompanyComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, AppBreadcrumbService, ConfigService,
-        LoginService, AuthService
+        LoginService, AuthService, MessageService
     ],
     bootstrap: [AppComponent]
 })

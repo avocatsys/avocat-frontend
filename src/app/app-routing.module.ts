@@ -35,6 +35,7 @@ import { BranchofficeComponent } from './pages/branchoffice/branchoffice.compone
 import { GroupComponent } from './pages/group/group.component';
 import { PrivilegeComponent } from './pages/privilege/privilege.component';
 import { UserComponent } from './pages/user/user.component';
+import { CompanyComponent } from './pages/companie/company.component';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { UserComponent } from './pages/user/user.component';
                     {path: 'groups', component: GroupComponent},
                     {path: 'users', component: UserComponent},
                     {path: 'privileges', component: PrivilegeComponent},
+                    {path: 'companies', component: CompanyComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
