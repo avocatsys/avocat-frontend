@@ -44,7 +44,7 @@ import { CompanyComponent } from './pages/companie/company.component';
                 path: '', component: AppMainComponent,
                 canActivate: [AuthService],
                 children: [
-                    {path: 'dash', component: UserComponent},
+                    {path: 'dash', component: CompanyComponent},
                     {path: 'branch-office', component: BranchofficeComponent},
                     {path: 'groups', component: GroupComponent},
                     {path: 'users', component: UserComponent},

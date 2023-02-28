@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { BranchOffice } from "src/app/models/branch-office.models";
 import { Company } from "src/app/models/company.models";
+import { DropDown } from "src/app/models/dropdown.models";
 import { BranchOfficeService } from "src/app/services/branch-office.service";
 import { CompanyService } from "src/app/services/company.service";
 
@@ -24,6 +25,8 @@ export class CompanyComponent implements OnInit {
 
   branchOfficeDrop: BranchOffice[];
 
+  companyTypes: DropDown[];
+
   formGroup: FormGroup;
 
   constructor(
@@ -35,41 +38,30 @@ export class CompanyComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
-    //this.loadBranchOffices();
+    this.loadBranchOffices();
+    this.loadCompanyTypes();
 
     this.formGroup = this.fb.group({
       id: [null],
       name: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.min(5),
-          Validators.max(250),
-        ]),
+        null,
+        Validators.compose([Validators.required, Validators.max(100)]),
       ],
       cpfCnpj: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.min(5),
-          Validators.max(250),
-        ]),
+        null,
+        Validators.compose([Validators.required, Validators.max(20)]),
       ],
       billingEmail: [
         null,
         Validators.compose([
           Validators.required,
-          Validators.min(5),
-          Validators.max(250),
+          Validators.email,
+          Validators.max(100),
         ]),
       ],
       description: [
         null,
-        Validators.compose([
-          Validators.required,
-          Validators.min(5),
-          Validators.max(250),
-        ]),
+        Validators.compose([Validators.required, Validators.max(2000)]),
       ],
       stateRegistration: [
         null,
@@ -79,31 +71,11 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-      //empresas tipos
-      issueDay: [
-        null,
-        Validators.compose([
-          Validators.required,
-          Validators.min(5),
-          Validators.max(250),
-        ]),
-      ],
-      dueDate: [
-        null,
-        Validators.compose([
-          Validators.required,
-          Validators.min(5),
-          Validators.max(250),
-        ]),
-      ],
-      maturityTerm: [
-        null,
-        Validators.compose([
-          Validators.required,
-          Validators.min(5),
-          Validators.max(250),
-        ]),
-      ],
+      companyTypes: [null, Validators.required],
+      issueDay: [null, Validators.compose([Validators.max(2)])],
+      dueDate: [null, Validators.compose([Validators.max(2)])],
+      maturityTerm: [null, Validators.compose([Validators.max(2)])],
+      branchOffice: [null, Validators.required],
     });
   }
 
@@ -111,7 +83,9 @@ export class CompanyComponent implements OnInit {
     this.busy = true;
     this.formGroup.disable();
     if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
-      
+
+      this.formGroup.value.companyTypes = this.formGroup.value.companyTypes.value.code;
+
       this.userService.save(this.formGroup.value).subscribe({
         next: () => {
           this.showSuccessViaToast(), this.clear();
@@ -149,13 +123,26 @@ export class CompanyComponent implements OnInit {
       },
     });
   }
-  
+
+  loadCompanyTypes() {
+    this.companyTypes = [
+      {
+        name: "PESSOA FÍSICA",
+        code: "FISICA",
+      },
+      {
+        name: "PESSOA JURÍDICA",
+        code: "JURIDICA",
+      },
+    ];
+  }
+
   edit(uuid: string) {
     this.navigation = "form";
     this.formGroup.enable();
     this.userService.findById(uuid).subscribe({
       next: (data) => {
-        this.formGroup.patchValue(data);               
+        this.formGroup.patchValue(data);
         this.busy = false;
       },
       error: () => {
@@ -181,7 +168,7 @@ export class CompanyComponent implements OnInit {
   clear() {
     this.formGroup.reset();
     this.busy = false;
-    this.formGroup.enable();    
+    this.formGroup.enable();
   }
 
   showErrorViaToast() {

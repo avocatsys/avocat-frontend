@@ -42,12 +42,12 @@
               </th>
               <th>
                 <div class="flex justify-content-between align-items-center">
-                  Unidade Associada
+                  Unidade associada
                 </div>
               </th>
               <th>
                 <div class="flex justify-content-between align-items-center">
-                  Tipo
+                  Tipo de pessoa
                 </div>
               </th>
               <th>
@@ -112,122 +112,146 @@
     ></button>
 
     <form [formGroup]="formGroup">
-      <div class="grid p-fluid">
-        <input
-          type="text"
-          id="inputtext"
-          pInputText
-          hidden
-          formControlName="id"
-        />
+      <input
+        type="text"
+        id="inputtext"
+        pInputText
+        hidden
+        formControlName="id"
+      />
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="name"
-            />
-            <label for="inputtext">Nome</label>
-          </span>
-        </div>
+      <p-tabView>
+        <p-tabPanel header="Dados principais">
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p-dropdown
+                type="text"
+                id="id"
+                placeholder="Selecione a Unidade"
+                optionLabel="branchOfficeName"
+                [options]="branchOfficeDrop"
+                formControlName="branchOffice"
+              ></p-dropdown>
+            </div>
+          </div>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="cpfCnpj"
-            />
-            <label for="inputtext">CNPJ ou CPF</label>
-          </span>
-        </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <span class="p-float-label">
+                <input
+                  type="text"
+                  id="inputtext"
+                  pInputText
+                  formControlName="name"
+                />
+                <label for="inputtext">Nome</label>
+              </span>
+            </div>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="billingEmail"
-            />
-            <label for="inputtext">E-mail de cobrança</label>
-          </span>
-        </div>
+            <div class="field col-12 md:col-3">
+              <span class="p-float-label">
+                <input
+                  type="text"
+                  id="inputtext"
+                  pInputText
+                  formControlName="cpfCnpj"
+                />
+                <label for="inputtext">CNPJ ou CPF</label>
+              </span>
+            </div>
+          </div>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="description"
-            />
-            <label for="inputtext">Descrição do contrato</label>
-          </span>
-        </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <span class="p-float-label">
+                <input
+                  type="text"
+                  id="inputtext"
+                  pInputText
+                  formControlName="stateRegistration"
+                />
+                <label for="inputtext">Inscrição Estadual</label>
+              </span>
+            </div>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="stateRegistration"
-            />
-            <label for="inputtext">Inscrição Estadual</label>
-          </span>
-        </div>
+            <div class="field col-12 md:col-3">
+              <p-dropdown                   
+                placeholder="Selecione o Tipo de Pessoa"
+                [options]="companyTypes"
+                optionLabel="code"                              
+                dataKey="companyTypes"  
+                optionValue="companyTypes"
+                formControlName="companyTypes"
+              ></p-dropdown>
+            </div>
+          </div>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="issueDay"
-            />
-            <label for="inputtext">Data de emissão</label>
-          </span>
-        </div>
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-6">
+              <textarea
+                rows="5"
+                cols="30"
+                placeholder="Descrição do contrato"
+                pInputTextarea
+                formControlName="description"
+              ></textarea>
+            </div>
+          </div>
+        </p-tabPanel>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input              
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="dueDate"
-            />
-            <label for="inputtext">Data de Vencimento</label>
-          </span>
-        </div>
+        <p-tabPanel header="Configurações para faturamento">
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <span class="p-float-label">
+                <input
+                  type="email"
+                  id="inputtext"
+                  pInputText
+                  formControlName="billingEmail"
+                />
+                <label for="inputtext">E-mail de cobrança</label>
+              </span>
+            </div>
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input
-              label="CNPJ ou CPF"
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="maturityTerm"
-            />
-            <label for="inputtext">Prazo de vencimento</label>
-          </span>
-        </div>
-        <!--div class="field col-12 md:col-4">          
-            <p-dropdown
-              type="text"
-              id="id"
-              placeholder="Selecione a Unidade"
-              optionLabel="branchOfficeName"
-              [options]="branchOfficeDrop"
-              formControlName="branchOffice"
-            ></p-dropdown>
-          </div-->
-      </div>
+            <div class="field col-12 md:col-3">
+              <p-inputNumber
+                placeholder="Dia de emissão"
+                mode="decimal"
+                [showButtons]="true"
+                [min]="1"
+                [max]="30"
+                formControlName="issueDay"
+              >
+              </p-inputNumber>
+            </div>
+          </div>
+
+          <div class="grid p-fluid">
+            <div class="field col-12 md:col-3">
+              <p-inputNumber
+                placeholder="Dia de vencimento"
+                mode="decimal"
+                [showButtons]="true"
+                [min]="1"
+                [max]="30"
+                formControlName="dueDate"
+              >
+              </p-inputNumber>
+            </div>
+
+            <div class="field col-12 md:col-3">
+              <p-inputNumber
+                placeholder="Prazo de vencimento"
+                mode="decimal"
+                [showButtons]="true"
+                [min]="1"
+                [max]="30"
+                formControlName="maturityTerm"
+              ></p-inputNumber>
+            </div>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
     </form>
 
     <button
