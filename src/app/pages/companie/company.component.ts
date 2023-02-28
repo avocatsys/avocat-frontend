@@ -25,7 +25,7 @@ export class CompanyComponent implements OnInit {
 
   branchOfficeDrop: BranchOffice[];
 
-  companyTypes: DropDown[];
+  persons: DropDown[];
 
   formGroup: FormGroup;
 
@@ -125,14 +125,14 @@ export class CompanyComponent implements OnInit {
   }
 
   loadCompanyTypes() {
-    this.companyTypes = [
+    this.persons = [
       {
-        name: "PESSOA FÍSICA",
-        code: "FISICA",
+        value: "FISICA",
+        label: "PESSOA FÍSICA",
       },
       {
-        name: "PESSOA JURÍDICA",
-        code: "JURIDICA",
+        value: "JURIDICA",
+        label: "PESSOA JURÍDICA",
       },
     ];
   }
