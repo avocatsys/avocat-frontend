@@ -1,4 +1,5 @@
 import { Customer } from "../demo/domain/customer";
+import { BranchOffice } from "./branch-office.models";
 
 export interface PageableCompany {
   content?: [Company];
@@ -20,5 +21,6 @@ export interface Company {
   issueDay?: number;
   dueDate?: number;
   maturityTerm?: string;
-  customer: Customer
+  customer: Customer,
+  branchOffice: BranchOffice
 }
