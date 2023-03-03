@@ -83,9 +83,6 @@ export class CompanyComponent implements OnInit {
     this.busy = true;
     this.formGroup.disable();
     if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
-
-      this.formGroup.value.companyTypes = this.formGroup.value.companyTypes.value.code;
-
       this.userService.save(this.formGroup.value).subscribe({
         next: () => {
           this.showSuccessViaToast(), this.clear();
@@ -113,28 +110,20 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  loadBranchOffices() {
-    this.branchOfficeService.load().subscribe({
-      next: (data) => {
-        this.branchOfficeDrop = data.content;
-      },
-      error: () => {
-        this.showErrorViaToast();
-      },
-    });
-  }
-
-  loadCompanyTypes() {
-    this.persons = [
-      {
-        value: "FISICA",
-        label: "PESSOA FÍSICA",
-      },
-      {
-        value: "JURIDICA",
-        label: "PESSOA JURÍDICA",
-      },
-    ];
+  delete(uuid: string) {
+    if (confirm("Deseja realmente excluir o item?")) {
+      this.userService.delete(uuid).subscribe({
+        next: () => {
+          this.showSuccessViaToast();
+          this.load();
+          this.busy = false;
+        },
+        error: () => {
+          this.showErrorViaToast();
+          this.busy = false;
+        },
+      });
+    }
   }
 
   edit(uuid: string) {
@@ -165,6 +154,29 @@ export class CompanyComponent implements OnInit {
     });
   }
 
+  loadBranchOffices() {
+    this.branchOfficeService.load().subscribe({
+      next: (data) => {
+        this.branchOfficeDrop = data.content;
+      },
+      error: () => {
+        this.showErrorViaToast();
+      },
+    });
+  }
+
+  loadCompanyTypes() {
+    this.persons = [
+      {
+        value: "FISICA",
+        label: "PESSOA FÍSICA",
+      },
+      {
+        value: "JURIDICA",
+        label: "PESSOA JURÍDICA",
+      },
+    ];
+  }
   clear() {
     this.formGroup.reset();
     this.busy = false;

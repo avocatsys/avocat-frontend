@@ -17,7 +17,7 @@ export class CompanyService {
 
   save(data: User) {
     return this.http.post<Company>(
-      `${this.url}/v1/customer/${this.customerId}/companies`,
+      `${this.url}/v1/customer/${this.customerId}/branch-office/${this.branchOfficeId}/companies`,
       data,
       { headers: Security.composeHeaders() }
     );
@@ -25,7 +25,7 @@ export class CompanyService {
 
   update(data: User) {
     return this.http.put<Company>(
-      `${this.url}/v1/branch-office/${this.branchOfficeId}/companies`,
+      `${this.url}/v1/customer/${this.customerId}/companies`,
       data,
       { headers: Security.composeHeaders() }
     );
@@ -41,6 +41,13 @@ export class CompanyService {
   findById(uuid: string) {
     return this.http.get<Company>(
       `${this.url}/v1/customer/${this.customerId}/companies/${uuid}`,
+      { headers: Security.composeHeaders() }
+    );
+  }
+  
+  delete(uuid: string) {
+    return this.http.delete(
+      `${this.url}/v1/customer/${this.customerId}/branch-office/${this.branchOfficeId}/companies/${uuid}`,
       { headers: Security.composeHeaders() }
     );
   }
