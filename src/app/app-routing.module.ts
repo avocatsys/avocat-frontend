@@ -36,6 +36,7 @@ import { GroupComponent } from './pages/group/group.component';
 import { PrivilegeComponent } from './pages/privilege/privilege.component';
 import { UserComponent } from './pages/user/user.component';
 import { CompanyComponent } from './pages/companie/company.component';
+import { ContractComponent } from './pages/contract/contract.component';
 
 @NgModule({
     imports: [
@@ -44,7 +45,7 @@ import { CompanyComponent } from './pages/companie/company.component';
                 path: '', component: AppMainComponent,
                 canActivate: [AuthService],
                 children: [
-                    {path: 'dash', component: CompanyComponent},
+                    {path: 'dash', component: ContractComponent},
                     {path: 'branch-office', component: BranchofficeComponent},
                     {path: 'groups', component: GroupComponent},
                     {path: 'users', component: UserComponent},

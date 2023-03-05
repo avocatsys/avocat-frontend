@@ -1,49 +1,40 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
-import { BranchOffice } from "src/app/models/branch-office.models";
 import { Company } from "src/app/models/company.models";
-import { DropDown } from "src/app/models/dropdown.models";
-import { BranchOfficeService } from "src/app/services/branch-office.service";
-import { CompanyService } from "src/app/services/company.service";
+import { Contract } from "src/app/models/contract.models";
+import { ContractService } from "src/app/services/contract.service";
 
 @Component({
-  selector: "app-company",
-  templateUrl: "./company.component.html",
-  providers: [CompanyService],
+  selector: "app-contract",
+  templateUrl: "./contract.component.html",
+  providers: [ContractService],
 })
-export class CompanyComponent implements OnInit {
-  navigation: string = "";
+export class ContractComponent {
+  navigation = "";
 
-  @Input() searchMode: boolean;
-
-  @Output() newItemEvent = new EventEmitter<Company>();
+  display: boolean;
 
   busy: boolean = false;
 
-  pageTitle = "Empresas/Pessoas";
+  pageTitle = "Contratos";
 
-  rows: Company[];
+  rows: Contract[];
 
-  valCheck: string[];
+  companySelected: string;
 
-  branchOfficeDrop: BranchOffice[];
-
-  persons: DropDown[];
+  companies: Company[];
 
   formGroup: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private service: MessageService,
-    private userService: CompanyService,
-    private branchOfficeService: BranchOfficeService
+    private contractService: ContractService
   ) {}
 
   ngOnInit(): void {
     this.load();
-    this.loadBranchOffices();
-    this.loadCompanyTypes();
 
     this.formGroup = this.fb.group({
       id: [null],
@@ -51,11 +42,11 @@ export class CompanyComponent implements OnInit {
         null,
         Validators.compose([Validators.required, Validators.max(100)]),
       ],
-      cpfCnpj: [
+      annotationBilling: [
         null,
         Validators.compose([Validators.required, Validators.max(20)]),
       ],
-      billingEmail: [
+      generalNote: [
         null,
         Validators.compose([
           Validators.required,
@@ -63,11 +54,11 @@ export class CompanyComponent implements OnInit {
           Validators.max(100),
         ]),
       ],
-      description: [
+      adjustmentDate: [
         null,
         Validators.compose([Validators.required, Validators.max(2000)]),
       ],
-      stateRegistration: [
+      closingDate: [
         null,
         Validators.compose([
           Validators.required,
@@ -75,11 +66,7 @@ export class CompanyComponent implements OnInit {
           Validators.max(250),
         ]),
       ],
-      companyTypes: [null, Validators.required],
-      issueDay: [null, Validators.compose([Validators.max(2)])],
-      dueDate: [null, Validators.compose([Validators.max(2)])],
-      maturityTerm: [null, Validators.compose([Validators.max(2)])],
-      branchOffice: [null, Validators.required],
+      company: [null, Validators.required],
     });
   }
 
@@ -87,7 +74,7 @@ export class CompanyComponent implements OnInit {
     this.busy = true;
     this.formGroup.disable();
     if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
-      this.userService.save(this.formGroup.value).subscribe({
+      this.contractService.save(this.formGroup.value).subscribe({
         next: () => {
           this.showSuccessViaToast(), this.clear();
         },
@@ -102,7 +89,7 @@ export class CompanyComponent implements OnInit {
 
   load() {
     this.busy = true;
-    this.userService.load().subscribe({
+    this.contractService.load().subscribe({
       next: (data) => {
         this.rows = data.content;
         this.busy = false;
@@ -116,7 +103,7 @@ export class CompanyComponent implements OnInit {
 
   delete(uuid: string) {
     if (confirm("Deseja realmente excluir o item?")) {
-      this.userService.delete(uuid).subscribe({
+      this.contractService.delete(uuid).subscribe({
         next: () => {
           this.showSuccessViaToast();
           this.load();
@@ -133,7 +120,7 @@ export class CompanyComponent implements OnInit {
   edit(uuid: string) {
     this.navigation = "form";
     this.formGroup.enable();
-    this.userService.findById(uuid).subscribe({
+    this.contractService.findById(uuid).subscribe({
       next: (data) => {
         this.formGroup.patchValue(data);
         this.busy = false;
@@ -148,7 +135,7 @@ export class CompanyComponent implements OnInit {
   update() {
     this.busy = true;
     this.formGroup.disable();
-    this.userService.update(this.formGroup.value).subscribe({
+    this.contractService.update(this.formGroup.value).subscribe({
       next: () => {
         this.showSuccessViaToast(), this.clear();
       },
@@ -158,32 +145,14 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  loadBranchOffices() {
-    this.branchOfficeService.load().subscribe({
-      next: (data) => {
-        this.branchOfficeDrop = data.content;
-      },
-      error: () => {
-        this.showErrorViaToast();
-      },
+  addItem(newItem: Company) {
+    console.log("acionou o método no pai!");
+    console.log(newItem);
+    this.formGroup.patchValue({
+      company: newItem,
     });
-  }
-
-  loadCompanyTypes() {
-    this.persons = [
-      {
-        value: "FISICA",
-        label: "PESSOA FÍSICA",
-      },
-      {
-        value: "JURIDICA",
-        label: "PESSOA JURÍDICA",
-      },
-    ];
-  }
-
-  addNewItem(value: any) {
-    this.newItemEvent.emit(value);
+    this.companySelected = newItem.name;
+    this.display = false;
   }
 
   clear() {

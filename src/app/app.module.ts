@@ -146,7 +146,7 @@ import { PrivilegeComponent } from './pages/privilege/privilege.component';
 import { UserComponent } from './pages/user/user.component';
 import { CompanyComponent } from './pages/companie/company.component';
 import { MessageService } from 'primeng/api';
-
+import { ContractComponent } from './pages/contract/contract.component';
 
 @NgModule({
     imports: [
@@ -282,7 +282,8 @@ import { MessageService } from 'primeng/api';
         GroupComponent,
         PrivilegeComponent,
         UserComponent,
-        CompanyComponent
+        CompanyComponent,
+        ContractComponent,
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
