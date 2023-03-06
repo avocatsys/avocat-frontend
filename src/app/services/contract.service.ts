@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Contract, PageableContract } from "../models/contract.models";
-import { User } from "../models/user.models";
 import { Security } from "../utils/security.utils";
 
 @Injectable({
@@ -38,16 +37,16 @@ export class ContractService {
     );
   }
 
-  findById(uuid: string) {
+  findById(contractId: string) {
     return this.http.get<Contract>(
-      `${this.url}/v1/customer/${this.customerId}/contracts/${uuid}`,
+      `${this.url}/v1/customer/${this.customerId}/contracts/${contractId}`,
       { headers: Security.composeHeaders() }
     );
   }
   
-  delete(uuid: string) {
+  delete(contractId: string) {
     return this.http.delete(
-      `${this.url}/v1/customer/${this.customerId}/branch-office/${this.branchOfficeId}/contracts/${uuid}`,
+      `${this.url}/v1/customer/${this.customerId}/contracts/${contractId}`,
       { headers: Security.composeHeaders() }
     );
   }
