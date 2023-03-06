@@ -108,26 +108,15 @@
     ></button>
 
     <form [formGroup]="formBranchOffice">
-      <div class="grid p-fluid mt-3">
+      <div class="grid p-fluid">
         <input
           type="text"
           id="inputtext"
           pInputText
-          hidden          
+          hidden
           formControlName="id"
         />
 
-        <div class="field col-12 md:col-4">
-          <span class="p-float-label">
-            <input
-              type="text"
-              id="inputtext"
-              pInputText
-              formControlName="cpfCnpj"
-            />
-            <label for="inputtext">CNPJ\CPF</label>
-          </span>
-        </div>
         <div class="field col-12 md:col-4">
           <span class="p-float-label">
             <input
@@ -152,18 +141,19 @@
         </div>
       </div>
 
-      <div class="grid p-fluid mt-3">
+      <div class="grid p-fluid">
         <div class="field col-12 md:col-4">
           <span class="p-float-label">
             <input
               type="text"
               id="inputtext"
               pInputText
-              formControlName="codeOffice"
+              formControlName="cpfCnpj"
             />
-            <label for="inputtext">Código do Escritório</label>
+            <label for="inputtext">CNPJ\CPF</label>
           </span>
         </div>
+
         <div class="field col-12 md:col-4">
           <span class="p-float-label">
             <input
@@ -175,10 +165,13 @@
             <label for="inputtext">Inscrição Estadual</label>
           </span>
         </div>
+      </div>
+
+      <div class="grid p-fluid">
         <div class="field col-12 md:col-4">
           <span class="p-float-label">
             <input
-              type="text"
+              type="email"
               id="inputtext"
               pInputText
               formControlName="email"
@@ -186,13 +179,22 @@
             <label for="inputtext">E-mail</label>
           </span>
         </div>
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label">
+            <input
+              type="text"
+              id="inputtext"
+              pInputText
+              formControlName="codeOffice"
+            />
+            <label for="inputtext">Código do Escritório</label>
+          </span>
+        </div>
       </div>
-
       <button
         pButton
         pRipple
-        label="Salvar"
-        class="mr-2 mb-2"
+        label="Salvar" class="mr-2 mb-2"
         icon="pi pi-save"
         (click)="save()"
         [disabled]="busy || formBranchOffice.invalid"

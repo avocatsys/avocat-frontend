@@ -44,26 +44,23 @@ export class BranchofficeComponent implements OnInit {
         "",
         Validators.compose([
           Validators.required,
-          Validators.min(5),
-          Validators.max(250),
+          Validators.max(200),
         ]),
       ],
       branchOfficeName: [
         "",
         Validators.compose([
           Validators.required,
-          Validators.min(5),
-          Validators.max(250),
+          Validators.max(200),
         ]),
       ],
-      codeOffice: ["", Validators.required],
-      stateRegistration: ["", Validators.max(250)],
+      codeOffice: [""],
+      stateRegistration: [null, Validators.max(250)],
       cpfCnpj: [
         "",
         Validators.compose([
           Validators.required,
-          Validators.min(5),
-          Validators.max(250),
+          Validators.max(200),
         ]),
       ],
       email: [
@@ -71,8 +68,7 @@ export class BranchofficeComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.email,
-          Validators.min(5),
-          Validators.max(250),
+          Validators.max(200),
         ]),
       ],
     });
