@@ -14,8 +14,8 @@ export interface Contract {
   name?: string;
   annotationBilling?: string;
   generalNote?: string;
-  adjustmentDate?: string;
-  closingDate?: string;
+  adjustmentDate?: Date;
+  closingDate?: Date;
   company?: Company;
   customer?: Customer;
 }

@@ -179,15 +179,25 @@
           <div class="grid p-fluid">
             <div class="field col-12 md:col-3">
               <span class="p-float-label">
-                <p-calendar [showIcon]="true" inputId="icon"></p-calendar>
-                <label for="inputtext">Data de Encerramento</label>
+                <p-calendar
+                  [showIcon]="true"
+                  inputId="icon"
+                  formControlName="adjustmentDate"
+                  dateFormat="dd/mm/yy"
+                ></p-calendar>
+                <label for="inputtext">Data de reajuste</label>
               </span>
             </div>
 
             <div class="field col-12 md:col-3">
               <span class="p-float-label">
-                <p-calendar [showIcon]="true" inputId="icon"></p-calendar>
-                <label for="inputtext">Data de reajuste</label>
+                <p-calendar
+                  [showIcon]="true"
+                  inputId="icon"
+                  formControlName="closingDate"
+                  dateFormat="dd/mm/yy"
+                ></p-calendar>
+                <label for="inputtext">Data de Encerramento</label>
               </span>
             </div>
           </div>

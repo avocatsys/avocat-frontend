@@ -23,9 +23,9 @@ export class ContractService {
     );
   }
 
-  update(data: User) {
+  update(data: Contract, companyId: string) {
     return this.http.put<Contract>(
-      `${this.url}/v1/customer/${this.customerId}/contracts`,
+      `${this.url}/v1/customer/${this.customerId}/company/${companyId}/contracts`,
       data,
       { headers: Security.composeHeaders() }
     );

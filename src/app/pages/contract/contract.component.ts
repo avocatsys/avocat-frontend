@@ -1,9 +1,11 @@
+import { ThisReceiver } from "@angular/compiler";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { Company } from "src/app/models/company.models";
 import { Contract } from "src/app/models/contract.models";
 import { ContractService } from "src/app/services/contract.service";
+import { setTimeout } from "timers";
 
 @Component({
   selector: "app-contract",
@@ -76,14 +78,17 @@ export class ContractComponent {
     this.busy = true;
     this.formGroup.disable();
     if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
-      this.contractService.save(this.formGroup.value, this.selectedCompanyId).subscribe({
-        next: () => {
-          this.showSuccessViaToast(), this.clear();
-        },
-        error: () => {
-          this.showErrorViaToast(), (this.busy = false), this.clear();
-        },
-      });
+      this.contractService
+        .save(this.formGroup.value, this.selectedCompanyId)
+        .subscribe({
+          next: () => {
+            this.showSuccessViaToast(), (this.busy = false);
+            this.clear();            
+          },
+          error: () => {
+            this.showErrorViaToast(), (this.busy = false), this.clear();
+          },
+        });
     } else {
       this.update();
     }
@@ -125,6 +130,13 @@ export class ContractComponent {
     this.contractService.findById(uuid).subscribe({
       next: (data) => {
         this.formGroup.patchValue(data);
+        this.displayCompany = data.company.name;
+        this.selectedCompanyId = data.company.id;
+        this.formGroup.get("closingDate").setValue(new Date(data.closingDate));
+        this.formGroup
+          .get("adjustmentDate")
+          .setValue(new Date(data.adjustmentDate));
+
         this.busy = false;
       },
       error: () => {
@@ -137,28 +149,35 @@ export class ContractComponent {
   update() {
     this.busy = true;
     this.formGroup.disable();
-    this.contractService.update(this.formGroup.value).subscribe({
-      next: () => {
-        this.showSuccessViaToast(), this.clear();
-      },
-      error: () => {
-        this.showErrorViaToast(), (this.busy = false);
-      },
-    });
+    this.contractService
+      .update(this.formGroup.value, this.selectedCompanyId)
+      .subscribe({
+        next: () => {
+          this.showSuccessViaToast(), this.clear();
+        },
+        error: () => {
+          this.showErrorViaToast(), (this.busy = false);
+        }
+      });
   }
 
   selectedCompany(company: Company) {
     console.log("acionou o método no pai!");
     console.log(company);
     this.selectedCompanyId = company.id;
-    this.displayCompany = company.name; 
+    this.displayCompany = company.name;
     this.display = false;
   }
 
   clear() {
-    this.formGroup.reset();
     this.busy = false;
-    this.formGroup.enable();
+    this.formGroup.reset();
+    this.displayCompany = null;
+    this.displayCompany = null;
+    
+    setInterval(()=>{
+      this.navigation = "list";
+    }, 800);
   }
 
   showErrorViaToast() {
