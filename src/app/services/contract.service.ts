@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Company, PageableCompany } from "../models/company.models";
+import { Contract, PageableContract } from "../models/contract.models";
 import { User } from "../models/user.models";
 import { Security } from "../utils/security.utils";
 
@@ -15,16 +15,16 @@ export class ContractService {
   private readonly branchOfficeId = Security.getBranchOfficeId();
   private readonly customerId = Security.getCustomerId();
 
-  save(data: User) {
-    return this.http.post<Company>(
-      `${this.url}/v1/customer/${this.customerId}/branch-office/${this.branchOfficeId}/contracts`,
+  save(data: Contract, companyId: string) {
+    return this.http.post<Contract>(
+      `${this.url}/v1/customer/${this.customerId}/branch-office/${this.branchOfficeId}/company/${companyId}/contracts`,
       data,
       { headers: Security.composeHeaders() }
     );
   }
 
   update(data: User) {
-    return this.http.put<Company>(
+    return this.http.put<Contract>(
       `${this.url}/v1/customer/${this.customerId}/contracts`,
       data,
       { headers: Security.composeHeaders() }
@@ -32,14 +32,14 @@ export class ContractService {
   }
 
   load() {
-    return this.http.get<PageableCompany>(
+    return this.http.get<PageableContract>(
       `${this.url}/v1/customer/${this.customerId}/contracts`,
       { headers: Security.composeHeaders() }
     );
   }
 
   findById(uuid: string) {
-    return this.http.get<Company>(
+    return this.http.get<Contract>(
       `${this.url}/v1/customer/${this.customerId}/contracts/${uuid}`,
       { headers: Security.composeHeaders() }
     );

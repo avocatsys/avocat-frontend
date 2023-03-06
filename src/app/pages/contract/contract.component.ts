@@ -21,7 +21,9 @@ export class ContractComponent {
 
   rows: Contract[];
 
-  companySelected: string;
+  selectedCompanyId: string;
+
+  displayCompany: string;
 
   companies: Company[];
 
@@ -74,7 +76,7 @@ export class ContractComponent {
     this.busy = true;
     this.formGroup.disable();
     if (this.formGroup.value.id == null || this.formGroup.value.id == "") {
-      this.contractService.save(this.formGroup.value).subscribe({
+      this.contractService.save(this.formGroup.value, this.selectedCompanyId).subscribe({
         next: () => {
           this.showSuccessViaToast(), this.clear();
         },
@@ -145,13 +147,11 @@ export class ContractComponent {
     });
   }
 
-  addItem(newItem: Company) {
+  selectedCompany(company: Company) {
     console.log("acionou o método no pai!");
-    console.log(newItem);
-    this.formGroup.patchValue({
-      company: newItem,
-    });
-    this.companySelected = newItem.name;
+    console.log(company);
+    this.selectedCompanyId = company.id;
+    this.displayCompany = company.name; 
     this.display = false;
   }
 

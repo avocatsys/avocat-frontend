@@ -1,7 +1,7 @@
 import { Customer } from "../demo/domain/customer";
 import { Company } from "./company.models";
 
-export interface PageableCompany {
+export interface PageableContract {
   content?: [Contract];
   empty?: boolean;
   first?: boolean;

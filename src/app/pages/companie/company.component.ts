@@ -17,7 +17,7 @@ export class CompanyComponent implements OnInit {
 
   @Input() searchMode: boolean;
 
-  @Output() newItemEvent = new EventEmitter<Company>();
+  @Output() companyEventEmitter = new EventEmitter<Company>();
 
   busy: boolean = false;
 
@@ -183,7 +183,7 @@ export class CompanyComponent implements OnInit {
   }
 
   addNewItem(value: any) {
-    this.newItemEvent.emit(value);
+  this.companyEventEmitter.emit(value);
   }
 
   clear() {
