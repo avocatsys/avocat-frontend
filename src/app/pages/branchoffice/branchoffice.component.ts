@@ -23,7 +23,7 @@ import { BranchOfficeService } from "src/app/services/branch-office.service";
 export class BranchofficeComponent implements OnInit {
   rows: BranchOffice[];
 
-  navigation: string = "";
+  navigation: string;
 
   busy: boolean = false;
 
@@ -42,26 +42,17 @@ export class BranchofficeComponent implements OnInit {
       id: [null],
       corporateName: [
         "",
-        Validators.compose([
-          Validators.required,
-          Validators.max(200),
-        ]),
+        Validators.compose([Validators.required, Validators.max(200)]),
       ],
       branchOfficeName: [
         "",
-        Validators.compose([
-          Validators.required,
-          Validators.max(200),
-        ]),
+        Validators.compose([Validators.required, Validators.max(200)]),
       ],
       codeOffice: [""],
       stateRegistration: [null, Validators.max(250)],
       cpfCnpj: [
         "",
-        Validators.compose([
-          Validators.required,
-          Validators.max(200),
-        ]),
+        Validators.compose([Validators.required, Validators.max(200)]),
       ],
       email: [
         "",
@@ -84,9 +75,7 @@ export class BranchofficeComponent implements OnInit {
       this.branchOfficeService.save(this.formBranchOffice.value).subscribe({
         next: () => {
           this.showSuccessViaToast(),
-            this.formBranchOffice.reset(),
-            (this.busy = false),
-            this.formBranchOffice.enable();
+          this.clear();
         },
         error: () => {
           this.showErrorViaToast(), (this.busy = false);
@@ -129,15 +118,18 @@ export class BranchofficeComponent implements OnInit {
     this.formBranchOffice.disable();
     this.branchOfficeService.update(this.formBranchOffice.value).subscribe({
       next: () => {
-        this.showSuccessViaToast(),
-          this.formBranchOffice.reset(),
-          (this.busy = false),
-          this.formBranchOffice.enable();
+        this.showSuccessViaToast(), this.clear();
       },
       error: () => {
         this.showErrorViaToast(), (this.busy = false);
       },
     });
+  }
+
+  clear() {
+    this.busy = false;
+    this.formBranchOffice.reset();
+    this.formBranchOffice.enable();
   }
 
   showErrorViaToast() {
