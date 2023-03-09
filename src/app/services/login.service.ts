@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Credentials } from "../models/account.models";
 
@@ -16,5 +16,13 @@ export class LoginService {
 
   logIn(data) {    
     return this.http.post<Credentials>(`${this.url}/v1/authentication/token`, data);
+  }
+
+  resetPassword(data) {
+    return this.http.put(
+      `${this.url}/v1/users/reset-password`,
+      data,
+      { headers: new HttpHeaders().set('Authorization', `${localStorage.getItem("_tt")}`)}
+    );
   }
 }

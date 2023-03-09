@@ -41,5 +41,17 @@
                 <button pButton pRipple label="Criar minha conta" icon="pi pi-user" class="w-full" [disabled]="formSignup.invalid" (click)="signUp()"></button>
             </div>
         </form>
+        
+        <form [formGroup]="formForgot" class="col-12" *ngSwitchCase="'forgot'">
+            <div>
+                <label class="block text-900 font-medium mb-2">Digite sua nova senha</label>
+                <input type="password" pInputText class="w-full mb-3" formControlName="password1"/>
+
+                <label class="block text-900 font-medium mb-2">Digite novamente sua nova senha</label>
+                <input type="password" pInputText class="w-full mb-3" formControlName="password2"/>
+
+                <button pButton pRipple label="Confirmar" icon="pi pi-user" class="w-full" [disabled]="formForgot.invalid" (click)="resetPassword()"></button>
+            </div>
+        </form>
     </div>
 </block-viewer>
