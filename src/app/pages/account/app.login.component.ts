@@ -17,6 +17,7 @@ export class AppLoginComponent implements OnInit {
     public formSignup: FormGroup
     public formLogin: FormGroup
     public formForgot: FormGroup
+    public formForgotPassword: FormGroup
 
     public busy = false
 
@@ -36,6 +37,10 @@ export class AppLoginComponent implements OnInit {
             password1: ['', Validators.required],
             password2: ['', Validators.required],
         })
+
+        this.formForgotPassword = this.fb.group({
+            email: ['', Validators.required],
+        })
     }
     ''
     ngOnInit(): void {
@@ -53,7 +58,7 @@ export class AppLoginComponent implements OnInit {
         this.busy = true
         this.loginService.signUp(this.formSignup.value).subscribe({
             next: () => {
-                this.showSuccessViaMessages()
+                this.showSuccessViaMessages('Sua conta foi criada com Sucesso! Verifique o seu e-mail')
             },
             error: () => {
                 this.showErrorViaMessages()
@@ -78,6 +83,7 @@ export class AppLoginComponent implements OnInit {
         this.busy = true
         this.loginService.resetPassword(this.formForgot.value).subscribe({
             next: () => {
+                this.showSuccessViaMessages('Senha alterada com sucesso')
                 this.router.navigate(['/login'])
             },
             error: () => {
@@ -86,12 +92,25 @@ export class AppLoginComponent implements OnInit {
         })
     }
 
-    showSuccessViaMessages() {
+    forgotPassword() {
+        this.busy = true
+        this.loginService.forgotPassword(this.formForgotPassword.value).subscribe({
+            next: () => {
+                this.showSuccessViaMessages('Enviamos um link no seu e-mail com as instruções. Verifique seu e-mail!')
+                this.router.navigate(['/login'])
+            },
+            error: () => {
+                this.showErrorViaMessages()
+            },
+        })
+    }
+
+    showSuccessViaMessages(msg: string) {
         this.msgs = []
         this.msgs.push({
             severity: 'success',
-            summary: 'Sua conta foi criada com Sucesso!',
-            detail: 'Verifique o seu e-mail!',
+            summary: msg,
+            //detail: 'Verifique o seu e-mail!',
         })
     }
 

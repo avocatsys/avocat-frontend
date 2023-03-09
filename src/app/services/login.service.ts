@@ -20,9 +20,16 @@ export class LoginService {
 
   resetPassword(data) {
     return this.http.put(
-      `${this.url}/v1/users/reset-password`,
+      `${this.url}/v1/password/reset`,
       data,
       { headers: new HttpHeaders().set('Authorization', `${localStorage.getItem("_tt")}`)}
+    );
+  }
+  
+  forgotPassword(data) {
+    return this.http.post(
+      `${this.url}/v1/password/forgot`,
+      data
     );
   }
 }
