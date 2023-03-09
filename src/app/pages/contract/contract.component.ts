@@ -171,13 +171,10 @@ export class ContractComponent {
 
   clear() {
     this.busy = false;
+    this.displayCompany = null;
+    this.displayCompany = null;
     this.formGroup.reset();
-    this.displayCompany = null;
-    this.displayCompany = null;
-    
-    setInterval(()=>{
-      this.navigation = "list";
-    }, 800);
+    this.formGroup.enable();
   }
 
   showErrorViaToast() {
