@@ -12,7 +12,13 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th>
+                                <div class="flex justify-content-between align-items-center">Nome</div>
+                            </th>
+                            <th>
                                 <div class="flex justify-content-between align-items-center">Username</div>
+                            </th>
+                            <th>
+                                <div class="flex justify-content-between align-items-center">Unidade associada</div>
                             </th>
                             <th>
                                 <div class="flex justify-content-between align-items-center">Ações</div>
@@ -22,7 +28,13 @@
                     <ng-template pTemplate="body" let-row>
                         <tr>
                             <td style="min-width: 12rem">
+                                {{ row.name }}
+                            </td>
+                            <td style="min-width: 12rem">
                                 {{ row.username }}
+                            </td>
+                            <td style="min-width: 12rem">
+                                {{ row.branchOffice.branchOfficeName }}
                             </td>
                             <td class="text-center" style="min-width: 8rem">
                                 <i class="pi pi-file-edit" title="edit" style="color: blue; cursor: pointer" (click)="edit(row.id)"></i>
@@ -90,9 +102,7 @@
                 <div class="grid">
                     <div class="col-12 md:col-4">
                         <div class="field-checkbox" *ngFor="let privilege of privilegesOpt">
-                            <p-checkbox [(ngModel)]="privileges" (onChange)="checkValue(privileges)" value="{{ privilege.id }}" label="{{ privilege.name }}">
-                                ></p-checkbox
-                            >
+                            <p-checkbox [(ngModel)]="privileges" (onChange)="checkValue(privileges)" value="{{ privilege.id }}" label="{{ privilege.name }}"> ></p-checkbox>
                         </div>
                     </div>
                 </div>
