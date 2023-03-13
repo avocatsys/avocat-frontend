@@ -124,7 +124,7 @@ export class UserComponent implements OnInit {
     }
 
     loadGroups() {
-        this.groupService.load().subscribe({
+        this.groupService.load("/groups").subscribe({
             next: (data) => {
                 this.groupDrop = data.content
             },

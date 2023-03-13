@@ -11,25 +11,25 @@ export class GroupService {
 
     private url = 'http://localhost:8080/avocat'
 
-    private readonly branchOfficeId = Security.getBranchOfficeId()
+    private readonly customerId = Security.getCustomerId()
 
-    save(data: Group) {
-        return this.http.post<Group>(`${this.url}/v1/branch-office/${this.branchOfficeId}/groups`, data, { headers: Security.composeHeaders() })
+    save(data: Group, path: string) {
+        return this.http.post<Group>(`${this.url}/v1/customer/${this.customerId}/${path}`, data, { headers: Security.composeHeaders() })
     }
 
-    update(data: Group) {
-        return this.http.put<Group>(`${this.url}/v1/branch-office/${this.branchOfficeId}/groups`, data, { headers: Security.composeHeaders() })
+    update(data: Group, path: string) {
+        return this.http.put<Group>(`${this.url}/v1/customer/${this.customerId}/${path}`, data, { headers: Security.composeHeaders() })
     }
 
-    load() {
-        return this.http.get<PageableGroup>(`${this.url}/v1/branch-office/${this.branchOfficeId}/groups`, { headers: Security.composeHeaders() })
+    load(path: string) {
+        return this.http.get<PageableGroup>(`${this.url}/v1/customer/${this.customerId}/${path}`, { headers: Security.composeHeaders() })
     }
 
-    findById(uuid: string) {
-        return this.http.get<Group>(`${this.url}/v1/branch-office/${this.branchOfficeId}/groups/${uuid}`, { headers: Security.composeHeaders() })
+    findById(uuid: string, path: string) {
+        return this.http.get<Group>(`${this.url}/v1/customer/${this.customerId}/${path}/${uuid}`, { headers: Security.composeHeaders() })
     }
-    
-    delete(uuid: string) {
-        return this.http.delete(`${this.url}/v1/branch-office/${this.branchOfficeId}/groups/${uuid}`, { headers: Security.composeHeaders() })
+
+    delete(uuid: string, path: string) {
+        return this.http.delete(`${this.url}/v1/customer/${this.customerId}/${path}/${uuid}`, { headers: Security.composeHeaders() })
     }
 }

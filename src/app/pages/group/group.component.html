@@ -12,7 +12,7 @@
                     rejectButtonStyleClass="p-button-text"
                 ></p-confirmDialog>
 
-                <h5>Grupos</h5>
+                <h5>{{ title }}</h5>
                 <p-table #dt1 [value]="rows" dataKey="id" [rows]="10" [rowHover]="true" styleClass="p-datatable-gridlines" [paginator]="true" responsiveLayout="scroll">
                     <ng-template pTemplate="caption">
                         <div class="flex justify-content-between flex-column sm:flex-row">
@@ -56,7 +56,7 @@
             <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
             <small style="margin-left: 0.5rem">Processing...</small>
         </span>
-        <h5>Grupos</h5>
+        <h5>{{ title }}</h5>
         <button pButton label="Voltar" class="p-button-outlined mb-2" icon="pi pi-arrow-left" (click)="navigation = 'list'; load()"></button>
 
         <form [formGroup]="formGroup">

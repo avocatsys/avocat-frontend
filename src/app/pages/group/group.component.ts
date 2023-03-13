@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
 import { ConfirmationService, MessageService } from 'primeng/api'
 import { Group } from 'src/app/models/group.models'
 import { GroupService } from 'src/app/services/group.service'
@@ -10,17 +11,92 @@ import { GroupService } from 'src/app/services/group.service'
     providers: [MessageService, GroupService, ConfirmationService],
 })
 export class GroupComponent implements OnInit {
-    rows: Group[]
+    title: string = ''
+
+    path: string
 
     navigation: string = ''
+
+    rows: Group[]
 
     busy: boolean = false
 
     formGroup: FormGroup
 
-    constructor(private fb: FormBuilder, private service: MessageService, private groupService: GroupService, private confirmationService: ConfirmationService) {}
+    constructor(
+        private fb: FormBuilder,
+        private service: MessageService,
+        private groupService: GroupService,
+        private confirmationService: ConfirmationService,
+        private activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit(): void {
+        this.activatedRoute.queryParams.subscribe((params) => {
+            this.path = params.screen
+        })
+
+        switch (this.path) {
+            case 'groups': {
+                this.title = 'Grupos'
+                this.path = 'groups'
+                break
+            }
+            case 'areas': {
+                this.title = 'Areas'
+                this.path = 'areas'
+                break
+            }
+            case 'actions': {
+                this.title = 'Tipos de Ações'
+                this.path = 'actions'
+                break
+            }
+            case 'forums': {
+                this.title = 'Forum'
+                this.path = 'forums'
+                break
+            }
+            case 'judicial-distcrit': {
+                this.title = 'Comarca'
+                this.path = 'judicial-district'
+                break
+            }
+            case 'judicial-progres': {
+                this.title = 'Tipos de andamentos processuais'
+                this.path = 'judicial-progress'
+                break
+            }
+            case 'legal-values': {
+                this.title = 'Valor Processual'
+                this.path = 'legal-values'
+                break
+            }
+            case 'legal-branches': {
+                this.title = 'Vara'
+                this.path = 'legal-branches'
+                break
+            }
+            case 'papers': {
+                this.title = 'Tipos de Papéis'
+                this.path = 'papers'
+                break
+            }
+            case 'procedural-phases': {
+                this.title = 'Fase Processual'
+                this.path = 'procedural-phases'
+                break
+            }
+            case 'rites': {
+                this.title = 'Ritos'
+                this.path = 'rites'
+                break
+            }
+            default: {
+                break
+            }
+        }
+
         this.load()
 
         this.formGroup = this.fb.group({
@@ -33,7 +109,7 @@ export class GroupComponent implements OnInit {
         this.busy = true
         this.formGroup.disable()
         if (this.formGroup.value.id == null || this.formGroup.value.id == '') {
-            this.groupService.save(this.formGroup.value).subscribe({
+            this.groupService.save(this.formGroup.value, this.path).subscribe({
                 next: () => {
                     this.showSuccessViaToast(), this.formGroup.reset(), (this.busy = false), this.formGroup.enable()
                 },
@@ -48,7 +124,7 @@ export class GroupComponent implements OnInit {
     }
 
     load() {
-        this.groupService.load().subscribe({
+        this.groupService.load(this.path).subscribe({
             next: (data) => {
                 this.rows = data.content
             },
@@ -62,7 +138,7 @@ export class GroupComponent implements OnInit {
         this.navigation = 'form'
         this.busy = true
         this.formGroup.enable()
-        this.groupService.findById(uuid).subscribe({
+        this.groupService.findById(uuid, this.path).subscribe({
             next: (data) => {
                 this.formGroup.patchValue(data)
                 this.busy = false
@@ -77,7 +153,7 @@ export class GroupComponent implements OnInit {
     update() {
         this.busy = true
         this.formGroup.disable()
-        this.groupService.update(this.formGroup.value).subscribe({
+        this.groupService.update(this.formGroup.value, this.path).subscribe({
             next: () => {
                 this.showSuccessViaToast(), this.formGroup.reset(), (this.busy = false), this.formGroup.enable()
             },
@@ -94,7 +170,7 @@ export class GroupComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.busy = true
-                this.groupService.delete(id).subscribe({
+                this.groupService.delete(id, this.path).subscribe({
                     next: () => {
                         this.showSuccessViaToast(), (this.busy = false), this.load()
                     },
