@@ -35,7 +35,7 @@ export class GroupComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe((params) => {
             this.path = params.screen
         })
-
+        
         switch (this.path) {
             case 'groups': {
                 this.title = 'Grupos'
@@ -57,7 +57,7 @@ export class GroupComponent implements OnInit {
                 this.path = 'forums'
                 break
             }
-            case 'judicial-distcrit': {
+            case 'judicial-district': {
                 this.title = 'Comarca'
                 this.path = 'judicial-district'
                 break
