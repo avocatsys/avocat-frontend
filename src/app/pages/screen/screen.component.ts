@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { ConfirmationService, MessageService } from 'primeng/api'
 import { Group } from 'src/app/models/group.models'
-import { GroupService } from 'src/app/services/group.service'
+import { ScreenService } from 'src/app/services/screen.service'
 
 @Component({
     selector: 'app-group',
-    templateUrl: './group.component.html',
-    providers: [MessageService, GroupService, ConfirmationService],
+    templateUrl: './screen.component.html',
+    providers: [MessageService, ScreenService, ConfirmationService],
 })
 export class GroupComponent implements OnInit {
     title: string = ''
@@ -26,7 +26,7 @@ export class GroupComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private service: MessageService,
-        private groupService: GroupService,
+        private screenService: ScreenService,
         private confirmationService: ConfirmationService,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -109,7 +109,7 @@ export class GroupComponent implements OnInit {
         this.busy = true
         this.formGroup.disable()
         if (this.formGroup.value.id == null || this.formGroup.value.id == '') {
-            this.groupService.save(this.formGroup.value, this.path).subscribe({
+            this.screenService.save(this.formGroup.value, this.path).subscribe({
                 next: () => {
                     this.showSuccessViaToast(), this.formGroup.reset(), (this.busy = false), this.formGroup.enable()
                 },
@@ -124,7 +124,7 @@ export class GroupComponent implements OnInit {
     }
 
     load() {
-        this.groupService.load(this.path).subscribe({
+        this.screenService.load(this.path).subscribe({
             next: (data) => {
                 this.rows = data.content
             },
@@ -138,7 +138,7 @@ export class GroupComponent implements OnInit {
         this.navigation = 'form'
         this.busy = true
         this.formGroup.enable()
-        this.groupService.findById(uuid, this.path).subscribe({
+        this.screenService.findById(uuid, this.path).subscribe({
             next: (data) => {
                 this.formGroup.patchValue(data)
                 this.busy = false
@@ -153,7 +153,7 @@ export class GroupComponent implements OnInit {
     update() {
         this.busy = true
         this.formGroup.disable()
-        this.groupService.update(this.formGroup.value, this.path).subscribe({
+        this.screenService.update(this.formGroup.value, this.path).subscribe({
             next: () => {
                 this.showSuccessViaToast(), this.formGroup.reset(), (this.busy = false), this.formGroup.enable()
             },
@@ -170,7 +170,7 @@ export class GroupComponent implements OnInit {
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.busy = true
-                this.groupService.delete(id, this.path).subscribe({
+                this.screenService.delete(id, this.path).subscribe({
                     next: () => {
                         this.showSuccessViaToast(), (this.busy = false), this.load()
                     },

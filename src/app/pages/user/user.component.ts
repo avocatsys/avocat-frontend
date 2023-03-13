@@ -6,7 +6,7 @@ import { Group } from 'src/app/models/group.models'
 import { Privilege } from 'src/app/models/privilege.models'
 import { User } from 'src/app/models/user.models'
 import { BranchOfficeService } from 'src/app/services/branch-office.service'
-import { GroupService } from 'src/app/services/group.service'
+import { ScreenService } from 'src/app/services/screen.service'
 import { PrivilegeService } from 'src/app/services/privilege.service'
 import { UserService } from 'src/app/services/user.service'
 
@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
         private userService: UserService,
         private privilegeService: PrivilegeService,
         private branchOfficeService: BranchOfficeService,
-        private groupService: GroupService
+        private screenService: ScreenService
     ) {}
 
     ngOnInit(): void {
@@ -124,7 +124,7 @@ export class UserComponent implements OnInit {
     }
 
     loadGroups() {
-        this.groupService.load("/groups").subscribe({
+        this.screenService.load("/groups").subscribe({
             next: (data) => {
                 this.groupDrop = data.content
             },

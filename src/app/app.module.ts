@@ -141,7 +141,7 @@ import {ConfigService} from './demo/service/app.config.service';
 import { LoginService } from './services/login.service';
 import { AuthService } from './services/auth.service';
 import { BranchofficeComponent } from './pages/branchoffice/branchoffice.component';
-import { GroupComponent } from './pages/group/group.component';
+import { GroupComponent } from './pages/screen/screen.component';
 import { PrivilegeComponent } from './pages/privilege/privilege.component';
 import { UserComponent } from './pages/user/user.component';
 import { CompanyComponent } from './pages/companie/company.component';

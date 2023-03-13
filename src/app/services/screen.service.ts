@@ -6,7 +6,7 @@ import { Security } from '../utils/security.utils'
 @Injectable({
     providedIn: 'root',
 })
-export class GroupService {
+export class ScreenService {
     constructor(private http: HttpClient) {}
 
     private url = 'http://localhost:8080/avocat'
